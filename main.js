@@ -1,5 +1,7 @@
 // Main JavaScript for Asif Communication
 
+document.documentElement.classList.remove('no-js');
+
 document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
     const mobileMenu = document.querySelector('#mobileMenu');
@@ -59,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.innerText = 'Message Sent!';
             btn.style.background = '#10b981';
             btn.style.color = '#fff';
-            
+
             contactForm.reset();
-            
+
             setTimeout(() => {
                 btn.innerText = originalText;
                 btn.style.background = '';
@@ -76,13 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const target = document.querySelector(targetId);
             if (target) {
                 if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
                 }
-                
+
                 window.scrollTo({
                     top: target.offsetTop - 80,
                     behavior: 'smooth'
