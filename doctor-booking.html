@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Doctor Appointment — Asif Communication</title>
+    <meta name="description" content="Book an online or in-clinic doctor appointment through Asif Communication. Fast, secure and convenient.">
+    <!-- Google Fonts (same as main site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Site CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================================
+           Doctor Booking Page — Local Styles
+           ===================================================== */
+
+        /* Page background (same as main site) */
+        .booking-page-wrap {
+            min-height: 100vh;
+            padding: 100px 0 70px;
+            background: var(--dark-bg, #0a0f1e);
+        }
+
+        /* ---- Breadcrumb ---- */
+        .das-breadcrumb {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 0.82rem;
+            color: var(--text-muted, #888);
+        }
+        .das-breadcrumb a {
+            color: var(--easypaisa, #00c851);
+            text-decoration: none;
+        }
+        .das-breadcrumb span { margin: 0 6px; opacity: 0.5; }
+
+        /* =====================================================
+           HERO BANNER
+           ===================================================== */
+        .das-hero-banner {
+            background: linear-gradient(135deg, #060e21 0%, #0c1a3a 50%, #060e21 100%);
+            border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+            border-radius: 24px;
+            padding: 50px 48px 40px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Grid lines overlay */
+        .das-hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+        }
+        /* Glow orb */
+        .das-hero-banner::after {
+            content: '';
+            position: absolute;
+            width: 460px; height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,200,81,0.07) 0%, transparent 65%);
+            top: -120px; right: -80px;
+            pointer-events: none;
+        }
+        .das-hero-banner-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .das-hero-icon-box {
+            width: 80px; height: 80px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #00c851, #00a3e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            flex-shrink: 0;
+            box-shadow: 0 10px 35px rgba(0,200,81,0.35);
+            animation: icon-glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes icon-glow {
+            0%   { box-shadow: 0 10px 35px rgba(0,200,81,0.35); }
+            100% { box-shadow: 0 10px 45px rgba(0,163,224,0.5); }
+        }
+        .das-hero-banner-text h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 8px;
+            letter-spacing: -0.3px;
+        }
+        .das-hero-banner-text h1 span {
+            color: var(--easypaisa, #00c851);
+        }
+        .das-hero-banner-text p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin: 0;
+        }
+        /* Trust pills */
+        .das-trust-pills {
+            display: flex;
+            gap: 10px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .das-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 7px 15px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+        }
+        .das-pill .blinky {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #00c851;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        /* =====================================================
+           BOOKING FORM CARD
+           ===================================================== */
+        .das-form-card {
+            background: var(--glass-bg, rgba(255,255,255,0.04));
+            border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+            border-radius: 24px;
+            padding: 40px 48px 48px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        /* subtle inner glow */
+        .das-form-card::before {
+            content: '';
+            position: absolute;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,200,81,0.05) 0%, transparent 70%);
+            bottom: -80px; right: -60px;
+            pointer-events: none;
+        }
+
+        /* ---- Step Progress Bar ---- */
+        .das-steps-bar {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 36px;
+        }
+        .das-step-item {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .das-step-item:last-child { flex: none; }
+        .das-step-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .das-step-circle {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.3);
+            transition: all 0.35s ease;
+        }
+        .das-step-name {
+            font-size: 0.67rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .das-step-connector {
+            flex: 1;
+            height: 2px;
+            background: rgba(255,255,255,0.07);
+            margin: 0 4px;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .das-step-connector-fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00c851, #00a3e0);
+            transition: width 0.5s ease;
+        }
+        .das-step-connector.filled .das-step-connector-fill { width: 100%; }
+        .das-step-item.active .das-step-circle {
+            background: linear-gradient(135deg, #00c851, #00a3e0);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,200,81,0.35);
+        }
+        .das-step-item.active .das-step-name { color: rgba(255,255,255,0.7); }
+        .das-step-item.done .das-step-circle {
+            background: rgba(0,200,81,0.2);
+            border-color: #00c851;
+            color: #00c851;
+        }
+        .das-step-item.done .das-step-name { color: #00c851; }
+
+        /* ---- Section Dividers ---- */
+        .das-sec-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 28px 0 18px;
+        }
+        .das-sec-label:first-of-type { margin-top: 0; }
+        .das-sec-icon {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+        }
+        .das-sec-label-text {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+        .das-sec-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* ---- Form Layout ---- */
+        .das-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .das-group { margin-bottom: 16px; }
+
+        .das-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .das-input-wrap { position: relative; }
+        .das-group input,
+        .das-group select {
+            width: 100%;
+            padding: 14px 18px 14px 46px;
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            color: #fff;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .das-group input::placeholder { color: rgba(255,255,255,0.2); }
+        .das-group input:focus,
+        .das-group select:focus {
+            border-color: #00c851;
+            background: rgba(0,200,81,0.06);
+            box-shadow: 0 0 0 4px rgba(0,200,81,0.12);
+        }
+        .das-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-color: rgba(255,255,255,0.05);
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        .das-group select option { background: #0d1626; color: #fff; }
+        .das-input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.3);
+            pointer-events: none;
+            transition: color 0.3s;
+        }
+        .das-group input:focus ~ .das-input-icon,
+        .das-group select:focus ~ .das-input-icon { color: #00c851; }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.5); cursor: pointer; }
+
+        /* ---- Time Slot Grid ---- */
+        .das-time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .das-ts { display: none; }
+        .das-ts-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 6px;
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            line-height: 1.3;
+            font-family: 'Outfit', sans-serif;
+        }
+        .das-ts-label small {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.3px;
+        }
+        .das-ts-label:hover {
+            border-color: #00c851;
+            color: #fff;
+            background: rgba(0,200,81,0.08);
+        }
+        .das-ts:checked + .das-ts-label {
+            background: linear-gradient(135deg, rgba(0,200,81,0.2), rgba(0,163,224,0.15));
+            border-color: #00c851;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,200,81,0.2);
+        }
+
+        /* ---- Fee Cards ---- */
+        .das-fee-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .das-fee-r { display: none; }
+        .das-fee-card {
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 20px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.04);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .das-fee-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00c851, #00a3e0);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .das-fee-r:checked + .das-fee-card::before { transform: scaleX(1); }
+        .das-fee-card:hover {
+            border-color: rgba(0,200,81,0.3);
+            background: rgba(0,200,81,0.06);
+            transform: translateY(-3px);
+        }
+        .das-fee-r:checked + .das-fee-card {
+            border-color: #00c851;
+            background: rgba(0,200,81,0.1);
+            box-shadow: 0 8px 28px rgba(0,200,81,0.2);
+            transform: translateY(-3px);
+        }
+        .das-fee-card .fee-checkmark {
+            position: absolute;
+            top: 9px; right: 9px;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: #00c851;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: #fff;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.25s ease;
+        }
+        .das-fee-r:checked + .das-fee-card .fee-checkmark {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .das-fee-card .fee-emoji { font-size: 1.5rem; display: block; margin-bottom: 7px; }
+        .das-fee-card .fee-type {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 8px;
+        }
+        .das-fee-card .fee-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+        .das-fee-card .fee-amount sub {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.4);
+        }
+        .das-fee-card .fee-desc {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.25);
+            margin-top: 6px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* ---- Payment Method ---- */
+        .das-payment-box {
+            background: rgba(0,200,81,0.05);
+            border: 1px solid rgba(0,200,81,0.2);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+        }
+        .das-payment-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00c851, #00a3e0, #00c851);
+        }
+        .das-payment-box h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 5px;
+        }
+        .das-payment-box > p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            margin: 0 0 18px;
+        }
+        .das-pay-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .das-pay-options label {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 15px 17px;
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+        .das-pay-options label:hover {
+            border-color: #00c851;
+            background: rgba(0,200,81,0.08);
+        }
+        .das-pay-options label:has(input:checked) {
+            border-color: #00c851;
+            background: rgba(0,200,81,0.1);
+            color: #fff;
+        }
+        .das-pay-options input[type="radio"] {
+            width: 16px; height: 16px;
+            accent-color: #00c851;
+            flex-shrink: 0;
+        }
+
+        /* ---- Submit ---- */
+        #das-book-submit {
+            width: 100%;
+            padding: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #00c851 0%, #00a3e0 100%);
+            background-size: 200% 200%;
+            animation: btn-move 4s ease infinite;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,200,81,0.35);
+            transition: transform 0.25s, box-shadow 0.25s;
+            letter-spacing: 0.3px;
+        }
+        @keyframes btn-move {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Shine sweep */
+        #das-book-submit::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            animation: shine 3.5s ease infinite;
+        }
+        @keyframes shine { 0%{left:-80%} 60%,100%{left:120%} }
+        #das-book-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(0,200,81,0.45);
+        }
+        #das-book-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            animation: none;
+        }
+        .das-secure-note {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.76rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* ---- Message Feedback ---- */
+        #das-msg {
+            margin-top: 18px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0;
+            overflow: hidden;
+        }
+        #das-msg.success { background: rgba(0,200,81,0.1); border: 1px solid rgba(0,200,81,0.3); color: #6ee7b7; padding: 16px; }
+        #das-msg.error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.3);  color: #fca5a5; padding: 16px; }
+
+        /* ---- Back Link ---- */
+        .das-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.25s;
+        }
+        .das-back-link:hover { color: #00c851; }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 620px) {
+            .das-hero-banner { padding: 32px 22px 28px; }
+            .das-form-card { padding: 28px 20px 36px; }
+            .das-row { grid-template-columns: 1fr; }
+            .das-time-grid { grid-template-columns: repeat(2, 1fr); }
+            .das-fee-cards { grid-template-columns: 1fr; }
+            .das-pay-options { grid-template-columns: 1fr; }
+            .das-hero-banner-text h1 { font-size: 1.4rem; }
+            .das-hero-icon-box { width: 60px; height: 60px; font-size: 1.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== NAVIGATION (same as main site) ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="./assets/owner_asif.png" alt="Asif Logo">
+                <div class="logo-text">Asif<span>Communication</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#accessories">Accessories</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#testimonials">Reviews</a></li>
+                <li><a href="index.html#blog">Blog</a></li>
+                <li><a href="index.html#about">About Asif</a></li>
+                <li><a href="doctor-booking.html" class="btn-primary">Book Appointment</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="booking-page-wrap">
+        <div class="container" style="max-width: 720px;">
+
+            <!-- Back link -->
+            <a href="index.html" class="das-back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+
+            <!-- Breadcrumb -->
+            <div class="das-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                Book Doctor Appointment
+            </div>
+
+            <!-- Hero Banner -->
+            <div class="das-hero-banner">
+                <div class="das-hero-banner-inner">
+                    <div class="das-hero-icon-box">🩺</div>
+                    <div class="das-hero-banner-text">
+                        <h1>Book Your <span>Appointment</span></h1>
+                        <p>Online &amp; In-Clinic consultations available 7 days a week</p>
+                    </div>
+                </div>
+                <div class="das-trust-pills">
+                    <span class="das-pill"><span class="blinky"></span> Available Today</span>
+                    <span class="das-pill"><i class="fas fa-lock" style="font-size:0.7rem;"></i> Secure Booking</span>
+                    <span class="das-pill"><i class="fas fa-bolt" style="font-size:0.65rem;color:#f59e0b;"></i> Instant Confirmation</span>
+                    <span class="das-pill"><i class="fab fa-whatsapp" style="color:#00c851;font-size:0.78rem;"></i> WhatsApp Notify</span>
+                </div>
+            </div>
+
+            <!-- Booking Form Card -->
+            <div class="das-form-card">
+                <form id="das-book-form">
+
+                    <!-- Step Bar -->
+                    <div class="das-steps-bar">
+                        <div class="das-step-item active" id="das-step-1">
+                            <div class="das-step-inner">
+                                <div class="das-step-circle">1</div>
+                                <div class="das-step-name">Details</div>
+                            </div>
+                        </div>
+                        <div class="das-step-connector" id="das-conn-1">
+                            <div class="das-step-connector-fill"></div>
+                        </div>
+                        <div class="das-step-item" id="das-step-2">
+                            <div class="das-step-inner">
+                                <div class="das-step-circle">2</div>
+                                <div class="das-step-name">Schedule</div>
+                            </div>
+                        </div>
+                        <div class="das-step-connector" id="das-conn-2">
+                            <div class="das-step-connector-fill"></div>
+                        </div>
+                        <div class="das-step-item" id="das-step-3">
+                            <div class="das-step-inner">
+                                <div class="das-step-circle">3</div>
+                                <div class="das-step-name">Payment</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Section 1: Personal Info ── -->
+                    <div class="das-sec-label">
+                        <div class="das-sec-icon">👤</div>
+                        <span class="das-sec-label-text">Patient Information</span>
+                        <div class="das-sec-line"></div>
+                    </div>
+
+                    <div class="das-row">
+                        <div class="das-group">
+                            <label>Full Name</label>
+                            <div class="das-input-wrap">
+                                <input type="text" id="das-name" name="name" placeholder="e.g. Ali Hassan" required>
+                                <span class="das-input-icon"><i class="fas fa-user"></i></span>
+                            </div>
+                        </div>
+                        <div class="das-group">
+                            <label>Phone Number</label>
+                            <div class="das-input-wrap">
+                                <input type="tel" id="das-phone" name="phone" placeholder="+92 300 1234567" required>
+                                <span class="das-input-icon"><i class="fas fa-mobile-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="das-group">
+                        <label>Email Address <span style="font-weight:400;opacity:0.5;">(optional)</span></label>
+                        <div class="das-input-wrap">
+                            <input type="email" id="das-email" name="email" placeholder="example@gmail.com">
+                            <span class="das-input-icon"><i class="fas fa-envelope"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- ── Section 2: Date & Time ── -->
+                    <div class="das-sec-label">
+                        <div class="das-sec-icon">📅</div>
+                        <span class="das-sec-label-text">Date &amp; Time Slot</span>
+                        <div class="das-sec-line"></div>
+                    </div>
+
+                    <div class="das-group">
+                        <label>Appointment Date</label>
+                        <div class="das-input-wrap">
+                            <input type="date" id="das-date" name="date" required
+                                min="<?php echo date('Y-m-d'); ?>">
+                            <span class="das-input-icon"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="das-group">
+                        <label>Select Time Slot</label>
+                        <div class="das-time-grid">
+                            <input class="das-ts" type="radio" name="time" id="ts-9"  value="09:00 AM" required>
+                            <label class="das-ts-label" for="ts-9">09:00<small>AM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-10" value="10:00 AM">
+                            <label class="das-ts-label" for="ts-10">10:00<small>AM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-11" value="11:00 AM">
+                            <label class="das-ts-label" for="ts-11">11:00<small>AM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-12" value="12:00 PM">
+                            <label class="das-ts-label" for="ts-12">12:00<small>PM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-14" value="02:00 PM">
+                            <label class="das-ts-label" for="ts-14">02:00<small>PM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-15" value="03:00 PM">
+                            <label class="das-ts-label" for="ts-15">03:00<small>PM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-16" value="04:00 PM">
+                            <label class="das-ts-label" for="ts-16">04:00<small>PM</small></label>
+
+                            <input class="das-ts" type="radio" name="time" id="ts-17" value="05:00 PM">
+                            <label class="das-ts-label" for="ts-17">05:00<small>PM</small></label>
+                        </div>
+                    </div>
+
+                    <!-- ── Section 3: Fee ── -->
+                    <div class="das-sec-label">
+                        <div class="das-sec-icon">💳</div>
+                        <span class="das-sec-label-text">Consultation Fee</span>
+                        <div class="das-sec-line"></div>
+                    </div>
+
+                    <div class="das-group">
+                        <div class="das-fee-cards">
+                            <input class="das-fee-r" type="radio" name="fee" id="fee-500"  value="Rs. 500 - Normal"  required>
+                            <label class="das-fee-card" for="fee-500">
+                                <div class="fee-checkmark">✓</div>
+                                <span class="fee-emoji">🩺</span>
+                                <div class="fee-type">Normal</div>
+                                <div class="fee-amount">500 <sub>Rs.</sub></div>
+                                <div class="fee-desc">General checkup</div>
+                            </label>
+
+                            <input class="das-fee-r" type="radio" name="fee" id="fee-1500" value="Rs. 1500 - Specialist">
+                            <label class="das-fee-card" for="fee-1500">
+                                <div class="fee-checkmark">✓</div>
+                                <span class="fee-emoji">🔬</span>
+                                <div class="fee-type">Specialist</div>
+                                <div class="fee-amount">1,500 <sub>Rs.</sub></div>
+                                <div class="fee-desc">Expert consultation</div>
+                            </label>
+
+                            <input class="das-fee-r" type="radio" name="fee" id="fee-3000" value="Rs. 3000 - VIP Online">
+                            <label class="das-fee-card" for="fee-3000">
+                                <div class="fee-checkmark">✓</div>
+                                <span class="fee-emoji">⭐</span>
+                                <div class="fee-type">VIP Online</div>
+                                <div class="fee-amount">3,000 <sub>Rs.</sub></div>
+                                <div class="fee-desc">Priority online visit</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div id="das-pay-section" style="display:none;" class="das-payment-box">
+                        <h3>💰 Payment Method</h3>
+                        <p>Select how you would like to complete your payment</p>
+                        <div class="das-pay-options">
+                            <label>
+                                <input type="radio" name="payment" value="Easypaisa / JazzCash" required>
+                                <span style="font-size:1.1rem;">📲</span>
+                                Easypaisa / JazzCash
+                            </label>
+                            <label>
+                                <input type="radio" name="payment" value="Debit / Credit Card">
+                                <span style="font-size:1.1rem;">💳</span>
+                                Debit / Credit Card
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" id="das-book-submit">
+                        <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+                        Confirm &amp; Book Appointment
+                    </button>
+                    <div class="das-secure-note">
+                        <i class="fas fa-lock" style="margin-right:5px;"></i>
+                        Your data is encrypted and 100% secure
+                    </div>
+
+                    <div id="das-msg"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER (same as main site) ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <img src="./assets/owner_asif.png" alt="Asif Logo">
+                        <div class="logo-text">Asif<span>Communication</span></div>
+                    </a>
+                    <p>Leading the way in digital solutions and mobile lifestyle.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#hero">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#accessories">Products</a></li>
+                        <li><a href="index.html#testimonials">Reviews</a></li>
+                        <li><a href="doctor-booking.html">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/923003100785"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Asif Communication. All rights reserved. Designed for Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main site JS (for navbar toggle etc.) -->
+    <script src="main.js"></script>
+
+    <script>
+        // =====================================================
+        //  Doctor Booking Logic
+        // =====================================================
+
+        // Set today's date as minimum
+        document.getElementById('das-date').min = new Date().toISOString().split('T')[0];
+
+        /* ---- Steps ---- */
+        function setStep(n) {
+            for (var i = 1; i <= 3; i++) {
+                var s = document.getElementById('das-step-' + i);
+                s.classList.remove('active', 'done');
+                if (i < n)       s.classList.add('done');
+                else if (i === n) s.classList.add('active');
+                // circle text
+                var circle = s.querySelector('.das-step-circle');
+                if (i < n) circle.textContent = '✓';
+                else       circle.textContent = i;
+            }
+            for (var c = 1; c <= 2; c++) {
+                var conn = document.getElementById('das-conn-' + c);
+                if (c < n) conn.classList.add('filled');
+                else       conn.classList.remove('filled');
+            }
+        }
+
+        /* ---- Date -> Step 2 ---- */
+        document.getElementById('das-date').addEventListener('change', function () {
+            if (this.value) setStep(2);
+        });
+
+        /* ---- Time -> Step 2 kept ---- */
+        document.querySelectorAll('.das-ts').forEach(function (el) {
+            el.addEventListener('change', function () { setStep(2); });
+        });
+
+        /* ---- Fee -> Show payment + Step 3 ---- */
+        document.querySelectorAll('.das-fee-r').forEach(function (el) {
+            el.addEventListener('change', function () {
+                var pay = document.getElementById('das-pay-section');
+                pay.style.display = 'block';
+                setStep(3);
+            });
+        });
+
+        /* ---- Form Submit -> WhatsApp ---- */
+        document.getElementById('das-book-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var name    = document.getElementById('das-name').value.trim();
+            var phone   = document.getElementById('das-phone').value.trim();
+            var email   = document.getElementById('das-email').value.trim();
+            var date    = document.getElementById('das-date').value;
+            var timeEl  = document.querySelector('.das-ts:checked');
+            var feeEl   = document.querySelector('.das-fee-r:checked');
+            var payEl   = document.querySelector('input[name="payment"]:checked');
+
+            /* Validations */
+            if (!name)   { showMsg('error', '⚠️ Please enter your full name.'); return; }
+            if (!phone)  { showMsg('error', '⚠️ Please enter your phone number.'); return; }
+            if (!date)   { showMsg('error', '⚠️ Please select an appointment date.'); return; }
+            if (!timeEl) { showMsg('error', '⏰ Please select a time slot.'); return; }
+            if (!feeEl)  { showMsg('error', '💳 Please choose a consultation fee.'); return; }
+            if (!payEl)  { showMsg('error', '💰 Please select a payment method.'); return; }
+
+            var time    = timeEl.value;
+            var fee     = feeEl.value;
+            var payment = payEl.value;
+
+            /* Build WhatsApp message */
+            var msg = '🩺 *New Doctor Appointment*\n\n' +
+                      '👤 *Name:* '    + name    + '\n' +
+                      '📱 *Phone:* '   + phone   + '\n' +
+                      (email ? '✉️ *Email:* ' + email + '\n' : '') +
+                      '📅 *Date:* '    + date    + '\n' +
+                      '⏰ *Time:* '    + time    + '\n' +
+                      '💳 *Fee:* '     + fee     + '\n' +
+                      '💰 *Payment:* ' + payment + '\n\n' +
+                      '✅ Booked via Asif Communication Website';
+
+            /* Open WhatsApp */
+            var waNumber = '923003100785'; // Asif's number
+            var waUrl = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(msg);
+
+            var $btn = document.getElementById('das-book-submit');
+            $btn.disabled = true;
+            $btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i> Opening WhatsApp...';
+
+            showMsg('success', '🎉 Appointment request ready! Opening WhatsApp to confirm...');
+
+            setTimeout(function () {
+                window.open(waUrl, '_blank');
+                $btn.disabled = false;
+                $btn.innerHTML = '<i class="fas fa-check-circle" style="margin-right:8px;"></i> Confirm &amp; Book Appointment';
+                document.getElementById('das-book-form').reset();
+                document.querySelectorAll('.das-ts, .das-fee-r').forEach(function(el){ el.checked = false; });
+                document.getElementById('das-pay-section').style.display = 'none';
+                setStep(1);
+            }, 1500);
+        });
+
+        function showMsg(type, msg) {
+            var el = document.getElementById('das-msg');
+            el.className = '';
+            el.textContent = '';
+            if (msg) {
+                el.className = type;
+                el.textContent = msg;
+            }
+        }
+    </script>
+</body>
+</html>
